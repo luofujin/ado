@@ -1,0 +1,90 @@
+ -v, --verbose         make lots of noise [default]
+  -u USER, --user=USER  Database user [default: trafodion]
+  -p PASSWORD, --password=PASSWORD
+                        Database user password [default: none]
+  -Q QUERYLIST, --querylist=QUERYLIST
+                        TPCDS queries list, this only used if -m specified to
+                        get correct QID from this list [default: /home/fujin
+                        /esgyn-tpcds-kit/tpcds-
+                        kit/query_templates/templates.lst]
+  -q QIDS, --qids=QIDS  Filter out specific TPCDS query IDs to run
+  -m, --modify          Modify QID info in all query files
+  -d QUERYDIR, --querydir=QUERYDIR
+                        Directory which store all query files [default:
+                        /home/fujin/esgyn-tpcds-kit/query/orc]
+  -t TYPE, --type=TYPE  table type TPC-DS test will run against [default: orc]
+  -c CYCLE, --cycle=CYCLE
+                        TPC-DS test cycle [default: 0]
+  -g, --generate        Only generate TPC-DS execution and statistic
+                        collection sql script, but not run
+  -e QUERYELAPSE, --queryelapse=QUERYELAPSE
+                        Cancel query when query execution elapse certain time
+  -E PREPAREELAPSE, --prepareelapse=PREPAREELAPSE
+                        Terminate query compilaiton when query prepare elapse
+                        certain time
+[trafodion@gy08 esgyn-tpcds-kit]$ /usr/local/python2.7.2/bin/python2.7 tpcds-test.py 
+2016-11-17 13:51:08,500 - tpcds-test.py[line:156] - __main__ - INFO - Start a new Query Stream: query_0.sql
+2016-11-17 13:51:08,501 - tpcds-test.py[line:277] - __main__ - INFO - load query from file /home/fujin/esgyn-tpcds-kit/query/orc/query_0.sql
+2016-11-17 13:51:08,549 - tpcds-test.py[line:412] - __main__ - INFO - [Stream 0] Setup odbc connection
+Connect using DSN=traf;UID=trafodion;PWD=None, autocommit = None, timeout=60
+Connect finished
+[DEBUG] execute query: set schema hive.tpcds_sf1000;
+[DEBUG] execute query: CQD comp_bool_158 'on';
+[DEBUG] execute query: cqd orc_read_stripe_info 'on';
+[DEBUG] execute query: cqd HIVE_METADATA_REFRESH_INTERVAL '-1';
+[DEBUG] execute query: CQD PARALLEL_NUM_ESPS '54';
+[DEBUG] execute query: CQD HIVE_NUM_ESPS_PER_DATANODE '9';
+[DEBUG] execute query: cqd query_cache '200000';
+[DEBUG] execute query: cqd HIVE_METADATA_REFRESH_INTERVAL '-1';
+[DEBUG] execute query: cqd metadata_cache_size '200';
+[DEBUG] execute query: CQD partitioning_scheme_sharing '2';
+[DEBUG] execute query: cqd orc_njs 'on';
+[DEBUG] execute query: cqd nested_joins 'on';
+[DEBUG] execute query: CQD GEN_HSHJ_MIN_MAX_OPT 'on';
+[DEBUG] execute query: cqd merge_joins 'off';
+[DEBUG] execute query: cqd comp_bool_208 'on';
+[DEBUG] execute query: CQD group_or_order_by_expr 'ON';
+[DEBUG] execute query: cqd hive_data_mod_check 'off';
+[DEBUG] execute query: CQD COMP_BOOL_221 'ON';
+[DEBUG] execute query: CQD SORT_MEMORY_QUOTA_SYSTEM 'OFF';
+[DEBUG] execute query: CQD SCRATCH_DIRS '/disk4/tmp:/disk5/tmp:/disk6/tmp';
+2016-11-17 13:51:42,517 - tpcds-test.py[line:131] - __main__ - INFO - [MONITOR] Cancel query: MXID11000048385212346070146177514000000000206U3333300_21___SQLCI_DML_LAST__, sql_text: select  [last 1] *  from  E_MP_DAY_ENERGY_P  where  meter_id = cast(?mid as NUMERIC(18,0))     and data_date >= date '2015-01-03'    and data_date <= date '2015-03-03'     order by data_date;                                                                
+Process Process-2:
+Traceback (most recent call last):
+  File "/usr/local/python2.7.2/lib/python2.7/multiprocessing/process.py", line 258, in _bootstrap
+    self.run()
+  File "/usr/local/python2.7.2/lib/python2.7/multiprocessing/process.py", line 114, in run
+    self._target(*self._args, **self._kwargs)
+  File "tpcds-test.py", line 417, in start_query_stream
+    conn = new_connection()
+  File "tpcds-test.py", line 390, in new_connection
+    conn.execute("CQD SCRATCH_DIRS '/disk4/tmp:/disk5/tmp:/disk6/tmp';")
+  File "/home/fujin/esgyn-tpcds-kit/lib/common/ODBCWrapper.py", line 78, in execute
+    raise(e)
+DatabaseError: (u'X08MI', u'[X08MI] [Trafodion ODBC Driver][Trafodion Database] SQL ERROR:*** ERROR[8810] Executor ran into an internal failure and returned an error without populating the diagnostics area. This error is being injected to indicate that. [2016-11-17 13:52:14]')
+2016-11-17 13:52:14,977 - tpcds-test.py[line:207] - __main__ - INFO - [Stream 0] starting a new process
+2016-11-17 13:52:14,985 - tpcds-test.py[line:412] - __main__ - INFO - [Stream 0] Setup odbc connection
+Connect using DSN=traf;UID=trafodion;PWD=None, autocommit = None, timeout=60
+2016-11-17 13:52:18,516 - tpcds-test.py[line:131] - __main__ - INFO - [MONITOR] Cancel query: MXID11000048385212346070146177514000000000206U3333300_21___SQLCI_DML_LAST__, sql_text: select  [last 1] *  from  E_MP_DAY_ENERGY_P  where  meter_id = cast(?mid as NUMERIC(18,0))     and data_date >= date '2015-01-03'    and data_date <= date '2015-03-03'     order by data_date;                                                                
+Connect finished
+[DEBUG] execute query: set schema hive.tpcds_sf1000;
+[DEBUG] execute query: CQD comp_bool_158 'on';
+[DEBUG] execute query: cqd orc_read_stripe_info 'on';
+[DEBUG] execute query: cqd HIVE_METADATA_REFRESH_INTERVAL '-1';
+[DEBUG] execute query: CQD PARALLEL_NUM_ESPS '54';
+[DEBUG] execute query: CQD HIVE_NUM_ESPS_PER_DATANODE '9';
+[DEBUG] execute query: cqd query_cache '200000';
+[DEBUG] execute query: cqd HIVE_METADATA_REFRESH_INTERVAL '-1';
+[DEBUG] execute query: cqd metadata_cache_size '200';
+[DEBUG] execute query: CQD partitioning_scheme_sharing '2';
+[DEBUG] execute query: cqd orc_njs 'on';
+[DEBUG] execute query: cqd nested_joins 'on';
+[DEBUG] execute query: CQD GEN_HSHJ_MIN_MAX_OPT 'on';
+[DEBUG] execute query: cqd merge_joins 'off';
+[DEBUG] execute query: cqd comp_bool_208 'on';
+[DEBUG] execute query: CQD group_or_order_by_expr 'ON';
+[DEBUG] execute query: cqd hive_data_mod_check 'off';
+[DEBUG] execute query: CQD COMP_BOOL_221 'ON';
+[DEBUG] execute query: CQD SORT_MEMORY_QUOTA_SYSTEM 'OFF';
+[DEBUG] execute query: CQD SCRATCH_DIRS '/disk4/tmp:/disk5/tmp:/disk6/tmp';
+2016-11-17 13:52:55,005 - tpcds-test.py[line:131] - __main__ - INFO - [MONITOR] Cancel query: MXID11000048385212346070146177514000000000206U3333300_21___SQLCI_DML_LAST__, sql_text: select  [last 1] *  from  E_MP_DAY_ENERGY_P  where  meter_id = cast(?mid as NUMERIC(18,0))     and data_date >= date '2015-01-03'    and data_date <= date '2015-03-03'     order by data_date;                                                                
